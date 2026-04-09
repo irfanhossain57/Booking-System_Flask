@@ -14,10 +14,13 @@ from dateutil.parser import parse as parse_date
 
 
 app = Flask(__name__)
-app.secret_key = "ticket_booking_secret"
+app.secret_key = os.environ.get("FLASK_SECRET_KEY", "ticket_booking_secret")
 
 # MongoDB Configuration
-app.config["MONGO_URI"] = "mongodb+srv://admin:Admin123@all-ticket-booking-syst.2qrnrhs.mongodb.net/ticket_booking?retryWrites=true&w=majority&appName=ALL-Ticket-Booking-System"
+app.config["MONGO_URI"] = os.environ.get(
+    "MONGO_URI",
+    "mongodb+srv://admin:Admin123@all-ticket-booking-syst.2qrnrhs.mongodb.net/ticket_booking?retryWrites=true&w=majority&appName=ALL-Ticket-Booking-System",
+)
 mongo = PyMongo(app)
 bus_routes_collection = mongo.db.bus_routes
 
